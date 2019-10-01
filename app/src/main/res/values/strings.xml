@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ECommerceApp</string>
+    <string name="Remember_me">Remember me</string>
+    <string name="forgot_password">Forget password</string>
+    <string name="admin">I am an admin?</string>
+</resources>
