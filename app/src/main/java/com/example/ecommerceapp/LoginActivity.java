@@ -113,7 +113,7 @@ if (usersData.getPhone().equals(phone)){
         if (ParentDbName.equals("Admins")) {
             Toast.makeText(getApplicationContext(), "Welcome admin you are Logged in successfully", Toast.LENGTH_SHORT).show();
             LoadingBar.dismiss();
-            Intent intent = new Intent(LoginActivity.this, AdminAddNewProductActivity.class);
+            Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
             startActivity(intent);
 
         } else if (ParentDbName.equals("Users")) {
