@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
               LoadingBar.show();
           }
       }
+
+
     }
 
     private void AllowAccess(final String phone, final String password) {
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_SHORT).show();
                             LoadingBar.dismiss();
                             Intent intent= new Intent(MainActivity.this,HomeActivity.class);
+                            Prevalent.currentOnlineUsers = usersData;
                             startActivity(intent);
                         }
                     }

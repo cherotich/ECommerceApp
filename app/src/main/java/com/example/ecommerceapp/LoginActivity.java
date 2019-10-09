@@ -120,6 +120,7 @@ if (usersData.getPhone().equals(phone)){
             Toast.makeText(getApplicationContext(), "Logged in successfully", Toast.LENGTH_SHORT).show();
             LoadingBar.dismiss();
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            Prevalent.currentOnlineUsers = usersData;
             startActivity(intent);
 
         }
