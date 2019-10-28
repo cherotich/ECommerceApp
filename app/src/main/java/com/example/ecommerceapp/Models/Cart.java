@@ -1,17 +1,18 @@
 package com.example.ecommerceapp.Models;
 
 public class Cart {
-    private String pid, price, quantity, pname;
+    private String pid, price, quantity, pname, imageCart;
 
     public Cart() {
     }
 
-    public Cart(String pid, String price, String quantity, String pname) {
+    public Cart(String pid, String price, String quantity, String pname, String imageCart) {
         this.pid = pid;
         this.price = price;
         this.quantity = quantity;
 
         this.pname = pname;
+        this.imageCart = imageCart;
     }
 
 
@@ -46,5 +47,13 @@ public class Cart {
 
     public void setPname(String pname) {
         this.pname = pname;
+    }
+
+    public String getImageCart() {
+        return imageCart;
+    }
+
+    public void setImageCart(String imageCart) {
+        this.imageCart = imageCart;
     }
 }

@@ -11,8 +11,7 @@
         android:id="@+id/product_image_details"
         android:layout_width="match_parent"
         android:layout_height="260dp"
-        android:scaleType="fitCenter
-" />
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/product_name_details"
@@ -71,16 +70,29 @@
 
     </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_product_to_cart"
-        android:layout_width="wrap_content"
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/add_product_to_cart"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:elevation="6dp"-->
+    <!--        android:backgroundTint="@android:color/white"-->
+    <!--        android:src="@drawable/nav_cart"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:layout_margin="15dp"-->
+
+    <!--        />-->
+
+    <Button
+        android:id="@+id/pd_add_product_to_cart"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="6dp"
-        android:backgroundTint="@android:color/white"
-        android:src="@drawable/nav_cart"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_margin="15dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Add to cart"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
 
         />
 

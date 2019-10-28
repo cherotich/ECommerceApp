@@ -1,19 +1,19 @@
 package com.example.ecommerceapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +49,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         ProductImageRef = FirebaseStorage.getInstance().getReference().child("Product Image");
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
         LoadingBar = new ProgressDialog(AdminAddNewProductActivity.this);
+
 
         addNewProductBtton = (Button) findViewById(R.id.Add_new_product);
         InputProductName = (EditText) findViewById(R.id.product_name);
