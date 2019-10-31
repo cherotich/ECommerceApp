@@ -26,8 +26,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -35,8 +38,8 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Button nextprocessbtn;
-    private TextView txtTotalAmount;
-    private int overalTotalPrice = 0;
+    private TextView txtTotalAmount, txtMsg1;
+    public int overalTotalPrice = 0;
     private String ProductId = "";
 
 
@@ -52,7 +55,9 @@ public class CartActivity extends AppCompatActivity {
 
         nextprocessbtn = (Button) findViewById(R.id.next_process_btn);
         txtTotalAmount = (TextView) findViewById(R.id.total_price);
+        txtMsg1 = (TextView) findViewById(R.id.msg1);
         ProductId = getIntent().getStringExtra("pid");
+
 
         nextprocessbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +77,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        checkOrderState();
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
@@ -87,8 +93,8 @@ public class CartActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull final CartViewHolder holder, int position, @NonNull final Cart model) {
 //                cartViewHolder.
                 holder.txtProductName.setText(model.getPname());
-//                 holder.txtProductQuantity.setText(model.getQuantity());
-                holder.txtProductQuantity.setNumber(model.getQuantity());
+                holder.txtProductQuantity.setText(model.getQuantity());
+//                holder.txtProductQuantity.setNumber(model.getQuantity());
 
                 holder.txtProductPrice.setText("Ksh" + model.getPrice());
 
@@ -252,4 +258,43 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
+
+    private void checkOrderState() {
+        DatabaseReference orderRef;
+        orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentOnlineUsers.getPhone());
+        orderRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    String shippingState = dataSnapshot.child("state").getValue().toString();
+                    String userName = dataSnapshot.child("name").getValue().toString();
+
+                    if (shippingState.equals("shipped")) {
+                        txtTotalAmount.setText("Dear " + userName + "\n Your order of total amount = ksh " + overalTotalPrice + " has been shipped successfully");
+                        recyclerView.setVisibility(View.GONE);
+
+                        txtMsg1.setVisibility(View.GONE);
+                        nextprocessbtn.setVisibility(View.GONE);
+
+
+                    } else if (shippingState.equals("not shipped")) {
+
+                        txtTotalAmount.setText("Shipping state = Not shipped");
+                        recyclerView.setVisibility(View.GONE);
+
+                        txtMsg1.setVisibility(View.GONE);
+                        nextprocessbtn.setVisibility(View.GONE);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

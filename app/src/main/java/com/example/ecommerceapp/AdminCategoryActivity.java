@@ -1,16 +1,18 @@
 package com.example.ecommerceapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AdminCategoryActivity extends AppCompatActivity {
     private ImageView tShirts, SportsTshirts, femaleDresses, sweathers;
     private ImageView glasses, hatsCaps, walletsBagsPurses, shoes;
     private ImageView headphoneHandfree, Laptops, watches, mobilePhones;
+    private Button logoutbtn, checkordersbtn;
 
 
     @Override
@@ -29,6 +31,32 @@ public class AdminCategoryActivity extends AppCompatActivity {
         Laptops = (ImageView) findViewById(R.id.laptop_pc);
         watches = (ImageView) findViewById(R.id.watches);
         mobilePhones = (ImageView) findViewById(R.id.mobilephones);
+
+        logoutbtn = (Button) findViewById(R.id.admin_logout);
+        checkordersbtn = (Button) findViewById(R.id.admin_check_orders);
+
+
+        logoutbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminCategoryActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        checkordersbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(AdminCategoryActivity.this, AdminNewOrderActivity.class);
+
+                startActivity(intent);
+
+
+            }
+        });
 
 
         tShirts.setOnClickListener(new View.OnClickListener() {
