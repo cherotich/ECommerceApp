@@ -1,5 +1,6 @@
 package com.example.ecommerceapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +49,7 @@ public class AdminNewOrderActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<adminOrders, adminOrdersHolderView> adapter
                 = new FirebaseRecyclerAdapter<adminOrders, adminOrdersHolderView>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull adminOrdersHolderView holder, final int i, @NonNull final adminOrders model) {
+            protected void onBindViewHolder(@NonNull final adminOrdersHolderView holder, final int i, @NonNull final adminOrders model) {
                 holder.userName.setText("Name: " + model.getName());
                 holder.userDateTime.setText("Order at:  " + model.getDate() + "  " + model.getTime());
                 holder.userPhoneNumber.setText("Phone Number: " + model.getPhone());
@@ -61,6 +63,39 @@ public class AdminNewOrderActivity extends AppCompatActivity {
                         Intent intent = new Intent(AdminNewOrderActivity.this, AdminUserProductsActivity.class);
                         intent.putExtra("uid", uid);
                         startActivity(intent);
+                    }
+                });
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        CharSequence options[] = new CharSequence[]
+                                {
+                                        "Yes",
+                                        "No"
+
+                                };
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AdminNewOrderActivity.this);
+                        builder.setTitle("Have you shipped this item?");
+                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (which == 0) {
+                                    String uid = getRef(i).getKey();
+                                    removeOrder(uid);
+                                } else {
+                                    finish();
+                                    Intent intent = new Intent(AdminNewOrderActivity.this, AdminNewOrderActivity.class);
+
+                                    startActivity(intent);
+                                }
+
+                            }
+                        });
+                        builder.show();
+
                     }
                 });
 
@@ -79,6 +114,7 @@ public class AdminNewOrderActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
+
     public static class adminOrdersHolderView extends RecyclerView.ViewHolder {
         public TextView userName, userPhoneNumber, userTotalPrice, userDateTime, UserShipppingAddress;
         public Button showOrdersBtn;
@@ -95,5 +131,12 @@ public class AdminNewOrderActivity extends AppCompatActivity {
             showOrdersBtn = itemView.findViewById(R.id.show_all_products_btn);
 
         }
+    }
+
+
+    private void removeOrder(String uid) {
+        ordersref.child(uid).removeValue();
+
+
     }
 }
